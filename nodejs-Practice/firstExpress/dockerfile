@@ -1,0 +1,16 @@
+# Base image
+FROM node:latest
+
+# Create app directory
+WORKDIR /usr/src/app
+
+COPY . /usr/src/app/
+COPY package*.json .
+
+#install the express
+RUN npm install express
+
+
+EXPOSE 3333
+
+CMD [ "node", "server.js" ]

@@ -1,0 +1,64 @@
+const express = require("express");
+const app = express(); //get a server object
+
+//middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//Can have a lot of different middleware
+//middleware
+app.use((req, res, next) => {
+  console.log("passing the middle ware");
+  //use the next to pass the token
+  next();
+});
+
+//second middleware
+app.use((req, res, next) => {
+  console.log("passing second middle ware");
+  //use the next to pass the token
+  next();
+});
+
+//get , callback function
+app.get("/", function (req, res) {
+  res.send("well come node js");
+});
+
+app.get("/anotherPage", function (req, res) {
+  res.send("new page");
+});
+
+app.get("/fruit", function (req, res) {
+  res.send("<h1>This is hi tag !</h1>");
+});
+
+//req.params
+app.get("/fruit/:someFruit", function (req, res) {
+  res.send("Welcome " + req.params.someFruit + " Page");
+});
+
+app.get("/example2", function (req, res) {
+  res.sendFile(__dirname + "/index.html");
+});
+
+//POST from form use req.body
+app.post("/formhandling", (req, res) => {
+  let { email, password } = req.body;
+  res.send("Your email is " + email);
+});
+
+//GET things from form use req.query
+// app.get("/formhandling", (req, res) => {
+//   res.send(
+//     "already get the name " + req.query.name + "and age: " + req.query.age
+//   );
+// });
+
+app.get("*", function (req, res) {
+  res.sendFile("EEEEEEError");
+});
+//port, callbacks
+app.listen(3000, () => {
+  console.log("server listen port 3000s");
+});
